@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master the Abacus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-card">
+        <header>
+            <h1>Match the Number</h1>
+            <p class="subtitle">Add beads to match the target below</p>
+        </header>
+
+        <div class="target-container">
+            <span id="target-number">00000</span>
+        </div>
+
+        <div class="abacus-container">
+            <div class="abacus-frame" id="abacus-frame">
+                </div>
+            
+            <div class="labels-row">
+                <span>T-Th</span>
+                <span>Th</span>
+                <span>H</span>
+                <span>T</span>
+                <span>O</span>
+            </div>
+        </div>
+
+        <div class="controls-container" id="controls-container">
+            </div>
+
+        <div class="current-value-container">
+            <span class="label">Your Value:</span>
+            <span id="current-number">0</span>
+        </div>
+
+        <div class="feedback-section">
+            <p id="status-message">Adjust the beads to start.</p>
+            <button id="next-btn" class="next-btn" disabled>New Question</button>
+        </div>
+    </div>
+
+    <div id="success-overlay" class="overlay">
+        <div class="congrats-card">
+            <div class="emoji-bounce">🎉</div>
+            <h2>Yeah! You Made It!</h2>
+            <p>You matched the number perfectly.</p>
+            <button id="overlay-next-btn" class="next-btn">Next Question ➔</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
