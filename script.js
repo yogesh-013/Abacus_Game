@@ -181,7 +181,7 @@ function updateVisuals1(rodIndex, change) {
  */
 function startNewQuestion() {
     // Generate random number 1 - 99999
-    targetNumber = Math.floor(Math.random() * 99999) + 1;
+    targetNumber = Math.floor(Math.random() * 999999) + 1;
     
     // Reset User State
     abacusState = [0, 0, 0, 0, 0, 0];
