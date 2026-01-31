@@ -4,8 +4,8 @@
  */
 
 // --- Game Constants & State ---
-const MAX_DIGITS = 5; // Units, Tens, Hundreds, Thousands, Ten-Thousands
-let abacusState = [0, 0, 0, 0, 0]; // Index 0 is Ten-Thousands (Leftmost), Index 4 is Units (Rightmost)
+const MAX_DIGITS = 6; // Units, Tens, Hundreds, Thousands, Ten-Thousands
+let abacusState = [0, 0, 0, 0, 0, 0]; // Index 0 is Ten-Thousands (Leftmost), Index 4 is Units (Rightmost)
 let targetNumber = 0;
 
 // --- DOM Elements ---
@@ -22,10 +22,10 @@ const elements = {
 
 // --- Initialization ---
 function initGame() {
-    renderInterface(); // [cite: 9, 10]
-    startNewQuestion(); // [cite: 17]
+    renderInterface(); //
+    startNewQuestion(); //
     
-    // Bind Event Listeners [cite: 24]
+    // Bind Event Listeners
     elements.nextButton.addEventListener('click', startNewQuestion);
     elements.overlayNextButton.addEventListener('click', startNewQuestion);
 }
@@ -45,7 +45,7 @@ function renderInterface() {
         rod.id = `rod-${i}`;
         elements.abacusFrame.appendChild(rod);
 
-        // Create Control Buttons (+ and -) [cite: 11]
+        // Create Control Buttons (+ and -)
         const group = document.createElement('div');
         group.className = 'control-group';
 
@@ -83,8 +83,8 @@ function updateRod(rodIndex, change) {
         addBeadRecursive(rodIndex);
     }
 
-    // Update UI after state change [cite: 12]
-    updateVisuals();
+    // Update UI after state change
+    updateVisuals1(rodIndex, change); 
     checkWinCondition();
 }
 
@@ -125,11 +125,12 @@ function addBeadRecursive(index) {
  * Reflects the `abacusState` array onto the HTML DOM.
  */
 function updateVisuals() {
+    
     for (let i = 0; i < MAX_DIGITS; i++) {
         const rodEl = document.getElementById(`rod-${i}`);
         rodEl.innerHTML = ''; // Clear previous beads
         
-        // Add beads based on current state [cite: 12]
+        // Add beads based on current state
         for (let b = 0; b < abacusState[i]; b++) {
             const bead = document.createElement('div');
             bead.className = 'bead';
@@ -137,7 +138,40 @@ function updateVisuals() {
         }
     }
 
-    // Calculate integer value from state array (e.g., [1,0,5,2,0] -> 10520) [cite: 14]
+    // Calculate integer value from state array (e.g., [1,0,5,2,0] -> 10520)
+    const currentVal = parseInt(abacusState.join(''));
+    elements.currentDisplay.textContent = currentVal.toLocaleString();
+}
+function updateVisuals1(rodIndex, change) {
+    if(rodIndex < 0 || rodIndex >= MAX_DIGITS) return;
+    
+    const rodEl = document.getElementById(`rod-${rodIndex}`);
+    const beads = rodEl.childNodes;
+    
+    if(change == 1) {
+        // Check if leftmost rod (index 0) is already at 9 - don't allow overflow
+        if(rodIndex === 0 && beads.length >= 9) {
+            return;
+        }
+        
+        // If current rod is full (has 9 beads), carry over
+        if(beads.length >= 9) {
+            rodEl.innerHTML = ''; // Reset current rod to 0 beads
+            updateVisuals1(rodIndex - 1, change); // Carry to left rod (ADD a bead there)
+        } else {
+            // Add a bead to current rod
+            const bead = document.createElement('div');
+            bead.className = 'bead';
+            rodEl.appendChild(bead);
+        }
+    } else if(change == -1) {
+        // Remove a bead if any exist
+        if(beads.length > 0) {
+            rodEl.removeChild(beads[beads.length - 1]);
+        }
+    }
+    
+    // Update the current number display
     const currentVal = parseInt(abacusState.join(''));
     elements.currentDisplay.textContent = currentVal.toLocaleString();
 }
@@ -146,11 +180,11 @@ function updateVisuals() {
  * 4. Game Control: New Question
  */
 function startNewQuestion() {
-    // Generate random number 1 - 99999 [cite: 8]
+    // Generate random number 1 - 99999
     targetNumber = Math.floor(Math.random() * 99999) + 1;
     
     // Reset User State
-    abacusState = [0, 0, 0, 0, 0];
+    abacusState = [0, 0, 0, 0, 0, 0];
     
     // UI Resets
     elements.targetDisplay.textContent = targetNumber.toLocaleString();
@@ -158,7 +192,7 @@ function startNewQuestion() {
     elements.statusMessage.className = "neutral-text";
     
     // Reset Buttons
-    elements.nextButton.disabled = true; // [cite: 17]
+    elements.nextButton.disabled = true; //
     elements.nextButton.textContent = "Solve to Continue";
     
     // Hide Overlay
@@ -169,7 +203,7 @@ function startNewQuestion() {
 
 /**
  * 5. Win Condition Check
- * Compares current value with target number. [cite: 15]
+ * Compares current value with target number.
  */
 function checkWinCondition() {
     const currentVal = parseInt(abacusState.join(''));
@@ -182,7 +216,7 @@ function checkWinCondition() {
 }
 
 function handleWin() {
-    // Display status match message [cite: 16]
+    // Display status match message
     elements.statusMessage.textContent = "You matched the number!";
     elements.statusMessage.className = "success-text";
     
@@ -195,7 +229,7 @@ function handleWin() {
 }
 
 function handleIncomplete() {
-    elements.statusMessage.textContent = "Keep adjusting the beads..."; // [cite: 16]
+    elements.statusMessage.textContent = "Keep adjusting the beads..."; //
     elements.statusMessage.className = "neutral-text";
     
     // Disable button if answer is wrong

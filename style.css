@@ -6,12 +6,19 @@
     --wood-color: #8d6e63;
     
     /* Bead Colors */
+    --bead-hth: #27ae60;
     --bead-tth: #e74c3c;
     --bead-th: #f39c12;
     --bead-h: #f1c40f;
     --bead-t: #3498db;
     --bead-o: #9b59b6;
+    
 }
+
+/*
+
+
+*/
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -81,12 +88,13 @@ h1 { color: var(--primary-color); margin: 0; font-size: 1.5rem; }
     from { transform: translateY(-20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
+.rod-0 .bead { background-color: var(--bead-hth); }
+.rod-1 .bead { background-color: var(--bead-tth); }
+.rod-2 .bead { background-color: var(--bead-th); }
+.rod-3 .bead { background-color: var(--bead-h); }
+.rod-4 .bead { background-color: var(--bead-t); }
+.rod-5 .bead { background-color: var(--bead-o); }
 
-.rod-0 .bead { background-color: var(--bead-tth); }
-.rod-1 .bead { background-color: var(--bead-th); }
-.rod-2 .bead { background-color: var(--bead-h); }
-.rod-3 .bead { background-color: var(--bead-t); }
-.rod-4 .bead { background-color: var(--bead-o); }
 
 .labels-row {
     display: flex;
